@@ -7,13 +7,11 @@ import { saveAs } from 'file-saver';
 })
 export class DocumentService2 {
   generateDocument(): void {
-    // Configuración del estilo base para párrafos
     const defaultParagraphStyle = {
       spacing: { before: 120, after: 120, line: 360 },
-      style: { font: { size: 24 } }  // Aumentar tamaño de letra (12pt = 24 half-points)
+      style: { font: { size: 24 } }
     };
 
-    // Configuración de márgenes para celdas
     const defaultCellMargins = {
       top: 100,
       bottom: 100,
@@ -25,12 +23,11 @@ export class DocumentService2 {
       sections: [{
         properties: {},
         children: [
-          // Título principal fuera de las tablas
           new Paragraph({
             text: "ANEXO N° 03",
             alignment: AlignmentType.CENTER,
             heading: HeadingLevel.HEADING_1,
-            spacing: { after: 50 }  // Espacio después del título
+            spacing: { after: 200 }
           }),
 
           // Tabla separada para "Orden de verificación"
@@ -43,33 +40,32 @@ export class DocumentService2 {
               right: { style: BorderStyle.SINGLE, size: 1 },
             },
             rows: [
-                new TableRow({
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
                     children: [
-                      new TableCell({
-                        margins: defaultCellMargins,
+                      new Paragraph({
+                        alignment: AlignmentType.CENTER,
+                        spacing: { before: 100, after: 100 },
                         children: [
-                          new Paragraph({
-                            alignment: AlignmentType.CENTER,
-                            spacing: { before: 100, after: 100 },
-                            children: [
-                              new TextRun({
-                                text: "Acta de Verificación",
-                                size: 28, 
-                                bold: true,
-                              }),
-                            ],
+                          new TextRun({
+                            text: "Acta de Verificación",
+                            size: 28,
+                            bold: true,
                           }),
                         ],
                       }),
                     ],
-                  })                  
+                  }),
+                ],
+              })
             ]
           }),
 
-          // Párrafo vacío para espacio entre tablas
           new Paragraph({
             text: "",
-            spacing: { before: 100, after: 50 }  // Espacio entre tablas
+            spacing: { before: 100, after: 50 }
           }),
 
           // Tabla principal con el resto del contenido
@@ -82,7 +78,6 @@ export class DocumentService2 {
               right: { style: BorderStyle.SINGLE, size: 1 },
             },
             rows: [
-              // Información general
               new TableRow({
                 children: [
                   new TableCell({
@@ -90,7 +85,6 @@ export class DocumentService2 {
                       new Table({
                         width: { size: 100, type: WidthType.PERCENTAGE },
                         rows: [
-                          // Encabezado del Acta
                           new TableRow({
                             children: [
                               new TableCell({
@@ -99,10 +93,11 @@ export class DocumentService2 {
                                   new Paragraph({
                                     spacing: { before: 100, after: 100 },
                                     children: [
-                                    new TextRun({ text: "Acta de Verificación N° (CODIGO DE LA OSPE)-2024-VCA-(NUMERO DEL CASO)-026-001", 
+                                      new TextRun({
+                                        text: "Acta de Verificación N° (CODIGO DE LA OSPE)-2024-VCA-(NUMERO DEL CASO)-026-001",
                                         bold: true,
-                                        size: 21, 
-                                     }),
+                                        size: 21,
+                                      }),
                                     ],
                                   }),
                                 ],
@@ -110,15 +105,17 @@ export class DocumentService2 {
                               }),
                             ],
                           }),
-                          // Texto principal
                           new TableRow({
                             children: [
                               new TableCell({
                                 margins: defaultCellMargins,
                                 children: [
                                   new Paragraph({
-                                    text: "En ............... , siendo las ........... horas del día .... del mes ............ del año ............, los verificadores de EsSalud que suscriben la presente Acta, nos constituimos en el local de la Entidad Empleadora .................................., sito en ........................................ con el fin de realizar la Verificación de (colocar nombres y apellidos del asegurado a verificar), identificado con DNI .................., iniciada mediante Orden de Verificación N° ................. por la modalidad de ......................, constatándose lo siguiente:",
-                                    style: "text",
+                                    children: [
+                                      new TextRun({
+                                        text: "En ............... , siendo las ........... horas del día .... del mes ............ del año ............, los verificadores de EsSalud que suscriben la presente Acta, nos constituimos en el local de la Entidad Empleadora .................................., sito en ........................................ con el fin de realizar la Verificación de (colocar nombres y apellidos del asegurado a verificar), identificado con DNI .................., iniciada mediante Orden de Verificación N° ................. por la modalidad de ......................, constatándose lo siguiente:",
+                                      }),
+                                    ],
                                   }),
                                 ],
                                 columnSpan: 2,
@@ -130,7 +127,7 @@ export class DocumentService2 {
                     ],
                   }),
                 ],
-              }),              
+              }),
               // Presente y texto explicativo
               new TableRow({
                 children: [
@@ -140,9 +137,9 @@ export class DocumentService2 {
                         new Paragraph({
                             spacing: { before: 10, after: 10 },
                             children: [
-                            new TextRun({ text: "I. Participantes de la verificación", 
+                            new TextRun({ text: "I. Participantes de la verificación",
                                 bold: true,
-                                size: 21, 
+                                size: 21,
                              }),
                             ],
                         }),
@@ -328,9 +325,9 @@ export class DocumentService2 {
                         new Paragraph({
                             spacing: { before: 10, after: 10 },
                             children: [
-                            new TextRun({ text: "II. Generalidades", 
+                            new TextRun({ text: "II. Generalidades",
                                 bold: true,
-                                size: 21, 
+                                size: 21,
                              }),
                             ],
                         }),
@@ -385,39 +382,152 @@ export class DocumentService2 {
                                 }),
                               ],
                             }),
-                            ...Array(2)
-                              .fill(null)
-                              .map(
-                                () =>
-                                  new TableRow({
-                                    children: [
-                                      new TableCell({ children: [new Paragraph("")] }),
-                                      new TableCell({ children: [new Paragraph("")] }),
-                                    ],
-                                  })
-                              ),
+                            new TableRow({
+                              children: [
+                                new TableCell({
+                                  margins: defaultCellMargins,
+                                  children: [
+                                    new Paragraph({
+                                      children: [
+                                        new Paragraph({
+                                            alignment: AlignmentType.CENTER, // Centrar el texto
+                                            children: [
+                                              new TextRun({
+                                                text: "N° de Asegurados:",
+                                              }),
+                                            ],
+                                          }),
+                                      ],
+                                    }),
+                                  ],
+                                  width: { size: 10, type: WidthType.PERCENTAGE },
+                                }),
+                                new TableCell({
+                                  margins: defaultCellMargins,
+                                  children: [
+                                    new Paragraph({
+                                        alignment: AlignmentType.CENTER,
+                                        children: [
+                                            new TextRun({
+                                                text: "Tiene Sucursales: Sí (    )   No (    )  De ser afirmativa la respuesta, anote su Dirección:",
+                                            }),
+                                        ],
+                                    }),
+                                  ],
+                                  width: { size: 60, type: WidthType.PERCENTAGE },
+                                }),
+                              ],
+                            }),
+
                           ]
-                      })
+                      }),
+
                     ]
                   })
                 ]
               }),
-
-
-              
-
-
-
-
-
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
+                    children: [
+                        new Paragraph({
+                            spacing: { before: 10, after: 10 },
+                            children: [
+                            new TextRun({ text: "Sucursal 1:",
+                             }),
+                            ],
+                        }),
+                    ]
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
+                    children: [
+                        new Paragraph({
+                            spacing: { before: 10, after: 10 },
+                            children: [
+                            new TextRun({ text: "Sucursal 2:",
+                             }),
+                            ],
+                        }),
+                    ]
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
+                    children: [
+                        new Paragraph({
+                            spacing: { before: 10, after: 10 },
+                            children: [
+                            new TextRun({ text: "¿Se encuentra en el Centro de Trabajo el asegurado sujeto de verificación?  Sí (    )   No (    )",
+                             }),
+                            ],
+                        }),
+                    ]
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
+                    children: [
+                        new Paragraph({
+                            spacing: { before: 10, after: 10 },
+                            children: [
+                            new TextRun({ text: "Si no se encuentra, indicar el motivo de su ausencia:",
+                             }),
+                            ],
+                        }),
+                    ]
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
+                    children: [
+                        new Paragraph({
+                            spacing: { before: 10, after: 10 },
+                            children: [
+                            new TextRun({ text: "¿Le presenta los documentos que sustentan la ausencia del asegurado? Sí (    )   No (    ).............................................",
+                             }),
+                            ],
+                        }),
+                    ]
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
+                    children: [
+                        new Paragraph({
+                            spacing: { before: 10, after: 10 },
+                            children: [
+                            new TextRun({ text: "III. Requerimientos de Información (Estos deben exhibirse y presentarse en copias legibles, (colocar Sí o No)",
+                                bold: true,
+                                size: 21,
+                             }),
+                            ],
+                        }),
+                    ]
+                  })
+                ]
+              }),
               new TableRow({
                 children: [
                   new TableCell({
                     children: [
-                      new Paragraph({
-                        text: "En virtud de lo dispuesto en el Artículo 11° del Reglamento aprobado por Decreto Supremo N° 002-2009-TR, le solicitamos poner a disposición del personal verificador los siguientes documentos:",
-                        spacing: { before: 200, after: 200 }
-                      }),
                       new Table({
                         width: { size: 100, type: WidthType.PERCENTAGE },
                         rows: [
@@ -426,43 +536,709 @@ export class DocumentService2 {
                               new TableCell({
                                 margins: defaultCellMargins,
                                 children: [
-                                  new Paragraph("1) Contrato de Trabajo del asegurado"),
-                                  new Paragraph("2) Declaraciones Tributarias-PDT 621- últimos seis (6) meses"),
-                                  new Paragraph("3) Registro en el MTPE"),
-                                  new Paragraph("4) Registros especiales según su actividad económica"),
-                                  new Paragraph("5) Planilla de Sueldos o Remuneraciones/Planilla Electrónica-PDT 601"),
-                                  new Paragraph("6) Boletas de Pago del asegurado de los últimos seis (6) meses"),
-                                  new Paragraph("7) Partes diarios de Asistencia de los últimos seis (6) meses"),
-                                  new Paragraph("8) Seis (6) últimos pagos de Aporte ONP/AFP del asegurado"),
-                                  new Paragraph("9) Descansos médicos de los últimos seis (6) meses"),
-                                  new Paragraph("10) Documentos de asignación de funciones del asegurado")
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Requerimiento de Información y/o Documentos", bold: true }),
+                                    ],
+                                  }),
                                 ],
                                 width: { size: 48, type: WidthType.PERCENTAGE }
                               }),
                               new TableCell({
                                 width: { size: 4, type: WidthType.PERCENTAGE },
                                 margins: defaultCellMargins,
-                                children: [new Paragraph("")]
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "¿Cumplió con presentar?", bold: true }),
+                                    ],
+                                  }),
+                                ],
                               }),
                               new TableCell({
                                 margins: defaultCellMargins,
                                 children: [
-                                  new Paragraph("11) Documentos presentados por el trabajador al empleador que evidencien las funciones desarrolladas en los últimos seis (6) meses"),
-                                  new Paragraph("12) Registro de Ventas"),
-                                  new Paragraph("13) Comprobantes de pago que emite"),
-                                  new Paragraph("14) Registro de Compras"),
-                                  new Paragraph("15) Relación de Productos o Servicios que vende"),
-                                  new Paragraph("16) Carta de empleador para depósito de CTS de los últimos semestres"),
-                                  new Paragraph("17) Título de propiedad, Título de Posesión, Contrato de Arrendamiento o Cesión de Uso del terreno donde se realiza la Actividad Agraria"),
-                                  new Paragraph("18) Puede considerar otros documentos"),
-                                  new Paragraph("19)	Otros: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Colocar el número de ítems solicitados: . . ")
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Observación", bold: true }),
+                                    ],
+                                  }),
                                 ],
                                 width: { size: 48, type: WidthType.PERCENTAGE }
                               })
                             ]
-                          })
+                          }),
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Contrato de Trabajo del asegurado" }),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "", bold: true }),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Plazo Indeterminado: "}),
+                                      new TextRun({ text: "Sí (  ) No (  )" }),
+                                      new TextRun({ text: "Tipo de contrato:" }),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //3
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Declaraciones Tributarias PDT- últimos seis (6) meses - PDT 621 de los periodos a verificar"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //4
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Registros especiales según su actividad económica"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Registrado en el MTPE: Sí (    )   No (    )"}),
+                                      new TextRun({ text: "Otro registro:"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //5
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Planilla de Sueldos o Remuneraciones-PDT 601"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Pago Gratificación Julio: Sí ( ) No ( )  S/."}),
+                                      new TextRun({ text: "Pago Gratificación Diciembre: Sí ( ) No (    )  S/. "}),
+                                      new TextRun({ text: "Pago CTS Noviembre: Sí ( ) No ( )  S/. "}),
+                                      new TextRun({ text: "Pago CTS Mayo: Sí ( ) No ( ) S/. "}),
+                                      new TextRun({ text: "Pago Vacaciones: Sí ( ) No ( ) S/. "}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //6
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Boletas de pago del asegurado de los últimos seis (6) meses de los periodos a verificar"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //7
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Partes diarios de asistencia de los últimos seis (6) meses de los periodos a verificar"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //8
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Seis (6) últimos pagos de Aporte ONP/AFP del asegurado"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //9
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Descansos médicos de los últimos seis (6) meses"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //10
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Documentos de asignación de funciones del asegurado"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //11
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Documentos presentados por el trabajador al empleador que evidencien las funciones desarrolladas en los últimos seis (6) ) meses"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //12
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Registro de Ventas - Comprobantes de pago que emite"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //13
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Registro de Compras"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
+                          //14
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: "Relación de productos o servicios que vende"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              }),
+                              new TableCell({
+                                width: { size: 4, type: WidthType.PERCENTAGE },
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ""}),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({ text: ":"}),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 48, type: WidthType.PERCENTAGE }
+                              })
+                            ]
+                          }),
                         ]
-                      })
+                      }),
+
+                    ]
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
+                    children: [
+                        new Paragraph({
+                            spacing: { before: 10, after: 10 },
+                            children: [
+                            new TextRun({ text: "IV. Descripción del lugar donde desarrolla la labor",
+                                bold: true,
+                                size: 21,
+                             }),
+                            ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                          new TextRun({ text: "Sea por separado y con firma del empleador y/o asegurado",
+                           }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                          new TextRun({ text: "........................................................................................................................",
+                           }),
+                          ],
+                        }),
+                    ]
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    margins: defaultCellMargins,
+                    children: [
+                        new Paragraph({
+                            spacing: { before: 10, after: 10 },
+                            children: [
+                            new TextRun({ text: "V. Declaración del empleador sobre la relación jurídica con el asegurado sujeto de verificación",
+                                bold: true,
+                                size: 21,
+                             }),
+                            ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                          new TextRun({ text: "5.1 ¿Cuál es la relación familiar o de parentesco que tiene con el asegurado?"}),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "...........................................................................................................................",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "5.2. ¿Desde cuándo labora el asegurado en su empresa, cuál es su horario y su remuneración?",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "...........................................................................................................................",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "5.3. ¿Cuáles son las funciones asignadas al asegurado y especifique en dónde las realiza?",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "...........................................................................................................................",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "5.4. ¿Conoce si su trabajador realiza otras actividades? ¿Dónde? ¿En qué horario?",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "...........................................................................................................................",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "5.5. Acepto que este documento y las demás comunicaciones me sean remitidas vía correo electrónico",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 5, after: 5 },
+                          children: [
+                            new TextRun({
+                              text: "SI [   ]",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 5, after: 5 },
+                          children: [
+                            new TextRun({
+                              text: "  Correo electrónico: _______________________",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "5.6. Acepto la toma de fotos y videos en relación a mi caso de verificación",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 5, after: 5 },
+                          children: [
+                            new TextRun({
+                              text: "SI [   ]",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "5.7. Otros datos adicionales:",
+                            }),
+                          ],
+                        }),
+                        new Paragraph({
+                          spacing: { before: 10, after: 10 },
+                          children: [
+                            new TextRun({
+                              text: "...........................................................................................................................",
+                            }),
+                          ],
+                        }),
                     ]
                   })
                 ]
@@ -473,70 +1249,138 @@ export class DocumentService2 {
                     margins: defaultCellMargins,
                     children: [
                       new Paragraph({
-                        text: "El verificador, de acuerdo a lo dispuesto en el artículo 07° del Reglamento aprobado por Decreto Supremo N° 002-2009-TR, está facultado para iniciar la verificación inmediatamente después de recibida la Orden de Verificación, ingresar al centro de trabajo, levantar actas, practicar cualquier diligencia de investigación, examen o prueba que considere necesario, requerir información e identificación de las personas que se encuentren en el centro de trabajo materia de la acción de verificación y solicitar la comparecencia de la entidad empleadora o sus representantes, de los trabajadores y de cualesquiera sujetos incluidos en su ámbito de actuación en el centro inspeccionado. El empleador debe permitir el ingreso a los funcionarios y/o servidores públicos en el centro de trabajo, lugar o establecimiento donde se lleva a cabo la verificación, colaborar con ellos durante su visita y facilitar la información y documentación que le sea solicitada para desarrollar la función de verificación, el incumplimiento de lo señalado en el párrafo anterior constituye infracción tipificada en el artículo 25° del Reglamento en mención, estando sujetos a las sanciones contenidas en el anexo de Tabla de Infracciones y Sanciones contenidas en el referido Decreto Supremo. En caso el verificador no sea atendido o exista demora en la atención, llevará a cabo una nueva visita dentro de los tres (3) días hábiles siguientes, para lo cual se deberá tener toda la información y/o documentación a su disposición, tal como se señala en el artículo 16° de la norma antes acotada. Si usted desea confirmar la identidad de los servidores designados podrá acceder a la siguiente dirección electrónica http://www.essalud.gob.pe/agencias-y-oficinas-de-seguros/  y/o comunicarse telefónicamente al número (Teléfono y anexo de la UCF u OSPE, según el tipo de oficina) en el (horario de atención) para comprobar su identidad. Base Legal: Ley N° 29135 reglamentada por el Decreto Supremo N° 002-2009-TR.",
-                        spacing: { before: 200, after: 200 }
-                      })
+                        spacing: { before: 10, after: 10 },
+                        children: [
+                          new TextRun({
+                            text: "VI. Observaciones: (EN ESTE ACAPITE COLOCAR TODAS LAS AFIRMACIONES QUE EL VERIFICADOR CONSIDERE IMPORTANTES, EN EL DESARROLLO DEL PROCESO. COLOCAR, DE SER EL CASO, LA RESPUESTA O MANIFESTACION DEL EMPLEADOR RESPECTO A LA VERIFICACION REALIZADA).",
+                            bold: true,
+                            size: 21,
+                          }),
+                        ],
+                      }),
+                      new Paragraph({
+                        spacing: { before: 10, after: 10 },
+                        children: [
+                          new TextRun({
+                            text: "...........................................................................................................................",
+                          }),
+                        ],
+                      }),
+                      new Paragraph({
+                        spacing: { before: 10, after: 10 },
+                        children: [
+                          new TextRun({
+                            text: "Siendo las.................. horas del día .............................., se da por concluida la visita de Verificación y se firma la presente acta, teniéndose por notificada en el momento. Dentro de los diez (10) días hábiles siguientes a la fecha consignada en la presente acta, la entidad empleadora podrá presentar los descargos y medios probatorios que estime pertinente y sustenten las declaraciones y/o actuaciones efectuadas.",
+                          }),
+                        ],
+                      }),
+                      new Table({
+                        rows: [
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                borders: {
+                                  top: { size: 0, style: BorderStyle.NONE },
+                                  bottom: { size: 0, style: BorderStyle.NONE },
+                                  left: { size: 0, style: BorderStyle.NONE },
+                                  right: { size: 0, style: BorderStyle.NONE },
+                                },
+                                children: [
+                                  new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                      new TextRun({
+                                        text: "_____________________________",
+                                        underline: {},
+                                      }),
+                                    ],
+                                  }),
+                                  new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                      new TextRun({
+                                        text: "Firma y sello del verificador de EsSalud",
+                                        bold: true,
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              new TableCell({
+                                borders: {
+                                  top: { size: 0, style: BorderStyle.NONE },
+                                  bottom: { size: 0, style: BorderStyle.NONE },
+                                  left: { size: 0, style: BorderStyle.NONE },
+                                  right: { size: 0, style: BorderStyle.NONE },
+                                },
+                                children: [
+                                  new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                      new TextRun({
+                                        text: "_____________________________",
+                                        underline: {},
+                                      }),
+                                    ],
+                                  }),
+                                  new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                      new TextRun({
+                                        text: "Firma y Sello Entidad Empleadora",
+                                        bold: true,
+                                      }),
+                                    ],
+                                  }),
+                                  new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                      new TextRun({
+                                        text: "Nombre:",
+                                      }),
+                                    ],
+                                  }),
+                                  new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                      new TextRun({
+                                        text: "DNI:",
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                            ],
+                          }),
+                        ],
+                        width: {
+                          size: 100,
+                          type: WidthType.PERCENTAGE,
+                        },
+                      }),
+                      new Paragraph({
+                        spacing: { before: 10, after: 10 },
+                        children: [
+                          new TextRun({
+                            text: "Nota: Forman parte de la presente acta las declaraciones del asegurado y de terceros participantes.",
+                          }),
+                        ],
+                      }),
+                      new Paragraph({
+                        spacing: { before: 10, after: 10 },
+                        children: [
+                          new TextRun({
+                            text: "La negativa de suscripción de la presente Acta, no invalida el acto de verificación, de conformidad con el artículo 19° del D.S. N° 002-2009-TR.",
+                          }),
+                        ],
+                      }),
                     ],
-                    width: { size: 50, type: WidthType.PERCENTAGE }
-                  })
-                ]
+                  }),
+                ],
               }),
-              new TableRow({
-                children: [
-                  new TableCell({
-                    margins: defaultCellMargins,
-                    children: [
-                      new Paragraph({
-                        text: "Acepto que este documento y las demás comunicaciones me sean remitidas vía correo electrónico   SI    ",
-                        spacing: { before: 200, after: 100 }
-                      }),
-                      new Paragraph({
-                        children: [
-                          new TextRun({
-                            text: "Correo:",
-                            bold: true
-                          })
-                        ],
-                        spacing: { before: 100, after: 100 }
-                      }),
-                      new Paragraph({
-                        text: "Acepto la toma de fotos y videos en relación a mi caso de verificación.   SI    ",
-                        spacing: { before: 100, after: 100 }
-                      }),
-                      new Paragraph({
-                        children: [
-                          new TextRun({
-                            text: "_____________________________",
-                            underline: {}
-                          })
-                        ],
-                        spacing: { before: 200, after: 50 }
-                      }),
-                      new Paragraph({
-                        children: [
-                          new TextRun({
-                            text: "Firma y Sello del Jefe de OSPE",
-                            bold: true
-                          })
-                        ],
-                        alignment: AlignmentType.LEFT,
-                        spacing: { before: 50, after: 100 }
-                      }),
-                      new Paragraph({
-                        children: [
-                          new TextRun({
-                            text: "Recepción: ............",
-                            bold: true
-                          })
-                        ],
-                        alignment: AlignmentType.RIGHT,
-                        spacing: { before: 50, after: 100 }
-                      })
-                    ],
-                    width: { size: 50, type: WidthType.PERCENTAGE }
-                  })
-                ]
-              })
+
+
+
 
             ]
           })
@@ -546,7 +1390,7 @@ export class DocumentService2 {
 
     // Generar y descargar el documento
     Packer.toBlob(doc).then(blob => {
-      saveAs(blob, "orden_verificacion.docx");
+      saveAs(blob, "orden_verificacion03.docx");
     });
   }
 }
