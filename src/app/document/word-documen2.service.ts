@@ -153,7 +153,7 @@ export class DocumentService2 {
                     margins: defaultCellMargins,
                     children: [
                       new Paragraph({
-                        text: "Personal y representantes de la entidad empladora.",
+                        text: "Personal y representantes de la entidad empleadora.",
                         spacing: { before: 10, after: 10 }
                       }),
                     ]
@@ -237,10 +237,10 @@ export class DocumentService2 {
                               .map(() =>
                                 new TableRow({
                                   children: [
-                                    new TableCell({ children: [new Paragraph("")] }),
-                                    new TableCell({ children: [new Paragraph("")] }),
-                                    new TableCell({ children: [new Paragraph("")] }),
-                                    new TableCell({ children: [new Paragraph("")] }),
+                                    new TableCell({margins: defaultCellMargins, children: [new Paragraph("")] }),
+                                    new TableCell({margins: defaultCellMargins, children: [new Paragraph("")] }),
+                                    new TableCell({margins: defaultCellMargins, children: [new Paragraph("")] }),
+                                    new TableCell({margins: defaultCellMargins, children: [new Paragraph("")] }),
                                   ],
                                 })
                               ),
@@ -250,73 +250,82 @@ export class DocumentService2 {
                   })
                 ]
               }),
-              // Texto verificadores y tabla
               new TableRow({
                 children: [
                   new TableCell({
+                    margins: defaultCellMargins,
                     children: [
                       new Paragraph({
                         text: "Verificadores designados por EsSalud:",
                         spacing: { before: 10, after: 10 }
                       }),
-                      new Table({
-                        width: { size: 100, type: WidthType.PERCENTAGE },
-                        rows: [
-                            new TableRow({
-                              children: [
-                                new TableCell({
-                                  margins: defaultCellMargins,
-                                  children: [
-                                    new Paragraph({
-                                      children: [
-                                        new Paragraph({
-                                            alignment: AlignmentType.CENTER, // Centrar el texto
-                                            children: [
-                                              new TextRun({
-                                                text: "N°",
-                                                bold: true, // Negrita
-                                              }),
-                                            ],
-                                          }),
-                                      ],
-                                    }),
-                                  ],
-                                  width: { size: 10, type: WidthType.PERCENTAGE },
-                                }),
-                                new TableCell({
-                                  margins: defaultCellMargins,
-                                  children: [
-                                    new Paragraph({
-                                        alignment: AlignmentType.CENTER,
-                                        children: [
-                                            new TextRun({
-                                                text: "Apellidos y Nombres",
-                                                bold: true,
-                                            }),
-                                        ],
-                                    }),
-                                  ],
-                                  width: { size: 60, type: WidthType.PERCENTAGE },
-                                }),
-                              ],
-                            }),
-                            ...Array(2)
-                              .fill(null)
-                              .map(
-                                () =>
-                                  new TableRow({
-                                    children: [
-                                      new TableCell({ children: [new Paragraph("")] }),
-                                      new TableCell({ children: [new Paragraph("")] }),
-                                    ],
-                                  })
-                              ),
-                          ]
-                      })
                     ]
                   })
                 ]
               }),
+              // Texto verificadores y tabla
+              new TableRow({
+                children: [
+                  new TableCell({
+                    children: [
+                      new Table({
+                        width: { size: 100, type: WidthType.PERCENTAGE },
+                        rows: [
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    alignment: AlignmentType.CENTER, // Centrar el texto
+                                    children: [
+                                      new TextRun({
+                                        text: "N°",
+                                        bold: true, // Negrita
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 10, type: WidthType.PERCENTAGE },
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                      new TextRun({
+                                        text: "Apellidos y Nombres",
+                                        bold: true,
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 90, type: WidthType.PERCENTAGE },
+                              }),
+                            ],
+                          }),
+                          ...Array.from({ length: 2 }, () =>
+                            new TableRow({
+                              children: [
+                                new TableCell({
+                                  margins: defaultCellMargins,
+                                  children: [new Paragraph({ text: "" })],
+                                }),
+                                new TableCell({
+                                  margins: defaultCellMargins,
+                                  children: [new Paragraph({ text: "" })],
+                                }),
+                              ],
+                            })
+                          ),
+                        ],
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+
               new TableRow({
                 children: [
                   new TableCell({
@@ -338,94 +347,90 @@ export class DocumentService2 {
               new TableRow({
                 children: [
                   new TableCell({
+                    margins: defaultCellMargins,
                     children: [
                       new Paragraph({
                         text: "Dirección de la entidad:",
                         spacing: { before: 10, after: 10 }
                       }),
-                      new Table({
-                        width: { size: 100, type: WidthType.PERCENTAGE },
-                        rows: [
-                            new TableRow({
-                              children: [
-                                new TableCell({
-                                  margins: defaultCellMargins,
-                                  children: [
-                                    new Paragraph({
-                                      children: [
-                                        new Paragraph({
-                                            alignment: AlignmentType.CENTER, // Centrar el texto
-                                            children: [
-                                              new TextRun({
-                                                text: "Telefono°",
-                                              }),
-                                            ],
-                                          }),
-                                      ],
-                                    }),
-                                  ],
-                                  width: { size: 10, type: WidthType.PERCENTAGE },
-                                }),
-                                new TableCell({
-                                  margins: defaultCellMargins,
-                                  children: [
-                                    new Paragraph({
-                                        alignment: AlignmentType.CENTER,
-                                        children: [
-                                            new TextRun({
-                                                text: "Horarios de trabajo:",
-                                            }),
-                                        ],
-                                    }),
-                                  ],
-                                  width: { size: 60, type: WidthType.PERCENTAGE },
-                                }),
-                              ],
-                            }),
-                            new TableRow({
-                              children: [
-                                new TableCell({
-                                  margins: defaultCellMargins,
-                                  children: [
-                                    new Paragraph({
-                                      children: [
-                                        new Paragraph({
-                                            alignment: AlignmentType.CENTER, // Centrar el texto
-                                            children: [
-                                              new TextRun({
-                                                text: "N° de Asegurados:",
-                                              }),
-                                            ],
-                                          }),
-                                      ],
-                                    }),
-                                  ],
-                                  width: { size: 10, type: WidthType.PERCENTAGE },
-                                }),
-                                new TableCell({
-                                  margins: defaultCellMargins,
-                                  children: [
-                                    new Paragraph({
-                                        alignment: AlignmentType.CENTER,
-                                        children: [
-                                            new TextRun({
-                                                text: "Tiene Sucursales: Sí (    )   No (    )  De ser afirmativa la respuesta, anote su Dirección:",
-                                            }),
-                                        ],
-                                    }),
-                                  ],
-                                  width: { size: 60, type: WidthType.PERCENTAGE },
-                                }),
-                              ],
-                            }),
-
-                          ]
-                      }),
-
                     ]
                   })
                 ]
               }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    children: [
+                      new Table({
+                        width: { size: 100, type: WidthType.PERCENTAGE },
+                        rows: [
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({
+                                        text: "Telefono°",
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 30, type: WidthType.PERCENTAGE },
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({
+                                        text: "Horarios de trabajo:",
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 60, type: WidthType.PERCENTAGE },
+                              }),
+                            ],
+                          }),
+                          new TableRow({
+                            children: [
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({
+                                        text: "N° de Asegurados:",
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 30, type: WidthType.PERCENTAGE },
+                              }),
+                              new TableCell({
+                                margins: defaultCellMargins,
+                                children: [
+                                  new Paragraph({
+                                    children: [
+                                      new TextRun({
+                                        text: "Tiene Sucursales: Sí (    )   No (    )  De ser afirmativa la respuesta, anote su Dirección:",
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                                width: { size: 60, type: WidthType.PERCENTAGE },
+                              }),
+                            ],
+                          }),
+                        ],
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+
               new TableRow({
                 children: [
                   new TableCell({
@@ -1252,7 +1257,7 @@ export class DocumentService2 {
                         spacing: { before: 10, after: 10 },
                         children: [
                           new TextRun({
-                            text: "VI. Observaciones: (EN ESTE ACAPITE COLOCAR TODAS LAS AFIRMACIONES QUE EL VERIFICADOR CONSIDERE IMPORTANTES, EN EL DESARROLLO DEL PROCESO. COLOCAR, DE SER EL CASO, LA RESPUESTA O MANIFESTACION DEL EMPLEADOR RESPECTO A LA VERIFICACION REALIZADA).",
+                            text: "VI. Observaciones: (EN ESTE ACAPITE COLOCAR TODAS LAS AFIRMACIONES QUE EL VERIFICADOR CONSIDERE IMPORTANTES, EN EL DESARROLLO DEL PROCESO. COLOCAR, DE SER EL CASO, LA RESPUESTA O MANIFESTACIÓN DEL EMPLEADOR RESPECTO A LA VERIFICACIÓN REALIZADA).",
                             bold: true,
                             size: 21,
                           }),
@@ -1267,18 +1272,25 @@ export class DocumentService2 {
                         ],
                       }),
                       new Paragraph({
-                        spacing: { before: 10, after: 10 },
+                        spacing: { before: 10, after: 50 },
                         children: [
                           new TextRun({
                             text: "Siendo las.................. horas del día .............................., se da por concluida la visita de Verificación y se firma la presente acta, teniéndose por notificada en el momento. Dentro de los diez (10) días hábiles siguientes a la fecha consignada en la presente acta, la entidad empleadora podrá presentar los descargos y medios probatorios que estime pertinente y sustenten las declaraciones y/o actuaciones efectuadas.",
                           }),
                         ],
                       }),
+                      // Tabla para las firmas con celdas invisibles
                       new Table({
                         rows: [
                           new TableRow({
                             children: [
                               new TableCell({
+                                margins: {
+                                  top: 0,
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                },
                                 borders: {
                                   top: { size: 0, style: BorderStyle.NONE },
                                   bottom: { size: 0, style: BorderStyle.NONE },
@@ -1307,6 +1319,12 @@ export class DocumentService2 {
                                 ],
                               }),
                               new TableCell({
+                                margins: {
+                                  top: 0,
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                },
                                 borders: {
                                   top: { size: 0, style: BorderStyle.NONE },
                                   bottom: { size: 0, style: BorderStyle.NONE },
@@ -1336,7 +1354,7 @@ export class DocumentService2 {
                                     alignment: AlignmentType.CENTER,
                                     children: [
                                       new TextRun({
-                                        text: "Nombre:",
+                                        text: "Nombre: ",
                                       }),
                                     ],
                                   }),
@@ -1344,7 +1362,7 @@ export class DocumentService2 {
                                     alignment: AlignmentType.CENTER,
                                     children: [
                                       new TextRun({
-                                        text: "DNI:",
+                                        text: "DNI: ",
                                       }),
                                     ],
                                   }),
@@ -1357,7 +1375,16 @@ export class DocumentService2 {
                           size: 100,
                           type: WidthType.PERCENTAGE,
                         },
+                        borders: {
+                          top: { size: 0, style: BorderStyle.NONE },
+                          bottom: { size: 0, style: BorderStyle.NONE },
+                          left: { size: 0, style: BorderStyle.NONE },
+                          right: { size: 0, style: BorderStyle.NONE },
+                        },
+                        layout: TableLayoutType.FIXED, // Asegura un diseño fijo sin fluctuaciones
                       }),
+
+
                       new Paragraph({
                         spacing: { before: 10, after: 10 },
                         children: [
@@ -1378,6 +1405,8 @@ export class DocumentService2 {
                   }),
                 ],
               }),
+
+
 
 
 
