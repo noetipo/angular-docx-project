@@ -19,7 +19,7 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "angular-docx-project": "file:",
-    "docx": "^9.0.2",
+    "docx": "^9.1.0",
     "docxtemplater": "^3.54.0",
     "file-saver": "^2.0.5",
     "pizzip": "^3.1.7",
