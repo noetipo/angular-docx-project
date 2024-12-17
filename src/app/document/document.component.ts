@@ -3,6 +3,7 @@ import {Component} from '@angular/core';
 import {DocumentService} from './word-documen.service';
 import {DocumentService2} from './word-documen2.service';
 import {DocumentEssaludService} from './word-documen-EsSalud.service';
+import {DocumentEssalud2Service} from './word-documen-EsSalud-2.service';
 
 @Component({
   selector: 'app-document',
@@ -11,7 +12,10 @@ import {DocumentEssaludService} from './word-documen-EsSalud.service';
   styleUrl: './document.component.scss'
 })
 export class DocumentComponent {
-  constructor(private documentService: DocumentService, private documentService2: DocumentService2, public documentEsSaludService: DocumentEssaludService) {
+  constructor(private documentService: DocumentService,
+              private documentService2: DocumentService2,
+              public documentEsSaludService: DocumentEssaludService,
+              public documentEsSalud2Service: DocumentEssalud2Service) {
   }
 
   downloadDocument(): void {
@@ -24,5 +28,9 @@ export class DocumentComponent {
 
   public documentEsSalud(): void {
     this.documentEsSaludService.generateDocument();
+  }
+
+  public documentEsSalud2(): void {
+    this.documentEsSalud2Service.generateDocument2();
   }
 }
